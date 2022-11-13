@@ -36,12 +36,10 @@ class HomeController extends ChangeNotifier {
 
   setListOfTasksIncomplete(List<TaskEntity> baseList) {
     _listOfTasksBeingShownOnIncomplete = baseList;
-    notifyListeners();
   }
 
   setListOfTasksComplete(List<TaskEntity> baseList) {
     _listOfTasksBeingShownOnComplete = baseList;
-    notifyListeners();
   }
 
   List<TaskEntity> getListOfTasksIncomplete() {
