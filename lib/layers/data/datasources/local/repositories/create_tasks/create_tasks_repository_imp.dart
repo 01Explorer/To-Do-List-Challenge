@@ -10,7 +10,10 @@ class CreateTasksRepositoryImp implements CreateTasksRepository {
   @override
   bool call(String title, String description, DateTime expiryDate) {
     TaskEntityDao task = TaskEntityDao(
-        taskTitle: title, content: description, endDate: expiryDate);
+        taskTitle: title,
+        content: description,
+        endDate: expiryDate,
+        status: false);
     if (hiveBox.containsKey(title.toLowerCase())) {
       return false;
     }

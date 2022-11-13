@@ -20,19 +20,22 @@ class TaskEntityDaoAdapter extends TypeAdapter<TaskEntityDao> {
       taskTitle: fields[0] as String,
       content: fields[1] as String,
       endDate: fields[2] as DateTime,
+      status: fields[3] as bool?,
     );
   }
 
   @override
   void write(BinaryWriter writer, TaskEntityDao obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.taskTitle)
       ..writeByte(1)
       ..write(obj.content)
       ..writeByte(2)
-      ..write(obj.endDate);
+      ..write(obj.endDate)
+      ..writeByte(3)
+      ..write(obj.status);
   }
 
   @override

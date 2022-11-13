@@ -14,7 +14,7 @@ class TaskEntityDao extends TaskEntity with HiveObjectMixin {
             title: taskTitle,
             description: content,
             expiryDate: endDate,
-            isCompleted: status);
+            isCompleted: status ?? false);
 
   @HiveField(0)
   String taskTitle;
@@ -26,12 +26,13 @@ class TaskEntityDao extends TaskEntity with HiveObjectMixin {
   DateTime endDate;
 
   @HiveField(3)
-  bool status;
+  bool? status;
 
   factory TaskEntityDao.fromTaskEntity(TaskEntity task) {
     return TaskEntityDao(
         taskTitle: task.title,
         content: task.description,
-        endDate: task.expiryDate);
+        endDate: task.expiryDate,
+        status: task.isCompleted);
   }
 }
