@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:to_do_list_challenge/layers/domain/entities/task_entity.dart';
-import 'package:to_do_list_challenge/layers/presentation/controllers/home_controller.dart';
 import 'package:to_do_list_challenge/layers/presentation/controllers/task_controller.dart';
 
 class NumberOfCompleteAndIncompleteTasksRow extends StatelessWidget {
@@ -16,7 +15,9 @@ class NumberOfCompleteAndIncompleteTasksRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-            'Tasks: ${incompleteTasksList.length} incompletes and ${completeTasksList.length} done'),
+          'Tasks: ${incompleteTasksList.length} incompletes and ${completeTasksList.length} done',
+          style: Theme.of(context).textTheme.bodyMedium,
+        ),
       ],
     );
   }

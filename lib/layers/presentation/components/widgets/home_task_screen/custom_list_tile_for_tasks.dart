@@ -24,7 +24,10 @@ class _CustomListTileForTasksState extends State<CustomListTileForTasks> {
   Widget build(BuildContext context) {
     SampleItem? selectedMenu;
     return ListTile(
-      title: Text(widget.task.title),
+      title: Text(
+        widget.task.title,
+        style: Theme.of(context).textTheme.bodySmall,
+      ),
       subtitle: widget.task.isCompleted
           ? const Text(
               'Finished',
@@ -41,7 +44,9 @@ class _CustomListTileForTasksState extends State<CustomListTileForTasks> {
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
                   child: Text(
-                      'on ${DateFormat('dd/MM/yyyy').format(widget.task.expiryDate)}'),
+                    'on ${DateFormat('dd/MM/yyyy').format(widget.task.expiryDate)}',
+                    style: Theme.of(context).textTheme.bodyMedium,
+                  ),
                 )
               ],
             ),

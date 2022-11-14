@@ -46,10 +46,18 @@ class IncompleteTasksSection extends StatelessWidget {
                 Icons.calendar_month,
               ),
             ),
-            IconButton(
-                onPressed: () =>
-                    _homeScreenController.resetDateBetweenFiltering(),
-                icon: const Icon(Icons.refresh))
+            AnimatedBuilder(
+              animation: _homeScreenController,
+              builder: (context, child) {
+                return Visibility(
+                  visible: _homeScreenController.newRangeToFilter != null,
+                  child: IconButton(
+                      onPressed: () =>
+                          _homeScreenController.resetDateBetweenFiltering(),
+                      icon: const Icon(Icons.refresh)),
+                );
+              },
+            )
           ],
         ),
         SizedBox(

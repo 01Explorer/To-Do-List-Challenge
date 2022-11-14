@@ -21,7 +21,7 @@ class HomeTaskPageHeader extends StatelessWidget {
           children: [
             Text(
               _homeScreenController.getFormattedInitialDate(),
-              style: Theme.of(context).textTheme.headlineMedium,
+              style: Theme.of(context).textTheme.headlineLarge,
             ),
             const SizedBox(
                 width: 48,
