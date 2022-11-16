@@ -16,9 +16,7 @@ class CustomListViewBuilderBasedOnOptions extends StatelessWidget {
         if (listWithDesiredTasks.isNotEmpty) {
           return CustomListTileForTasks(task: listWithDesiredTasks[index]);
         }
-        return const Center(
-          child: Text('We couldn\'t find anything'),
-        );
+        return Container();
       },
     );
   }
