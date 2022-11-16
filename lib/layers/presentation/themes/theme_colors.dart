@@ -10,4 +10,8 @@ class ThemeColors {
   static const sectionTitleFontColorLight = Color.fromRGBO(87, 87, 103, 1);
   static const subtitleTaskTextColorLight = Color.fromRGBO(185, 185, 190, 1);
   static const checkBoxUnselectedColorDark = Color.fromRGBO(41, 43, 53, 1);
+  static const borderDecorationCointainerforHeaderDark =
+      Color.fromRGBO(255, 255, 255, 0.05);
+  static const borderDecorationCointainerforHeaderLight =
+      Color.fromRGBO(0, 0, 0, 0.03);
 }
