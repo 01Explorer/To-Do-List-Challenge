@@ -4,6 +4,7 @@ import 'package:to_do_list_challenge/layers/presentation/controllers/home_contro
 import 'package:to_do_list_challenge/layers/presentation/controllers/task_controller.dart';
 
 import '../../../../domain/entities/task_entity.dart';
+import '../../no_task_found_handling_widget.dart';
 
 class CompletedTasksSection extends StatelessWidget {
   final TaskController _taskController;
@@ -36,8 +37,8 @@ class CompletedTasksSection extends StatelessWidget {
                 return CustomListViewBuilderBasedOnOptions(
                     listWithDesiredTasks: listOfCompletedTasks);
               }
-              return const Center(
-                child: Text('We couldn\'t find any completed task'),
+              return const NoTasksFoundWidget(
+                message: 'We couldn\'t find any completed task',
               );
             },
           ),

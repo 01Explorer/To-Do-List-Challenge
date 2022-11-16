@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:to_do_list_challenge/layers/presentation/components/no_task_found_handling_widget.dart';
 import 'package:to_do_list_challenge/layers/presentation/controllers/home_controller.dart';
 import 'package:to_do_list_challenge/layers/presentation/controllers/task_controller.dart';
 
@@ -80,6 +81,9 @@ class IncompleteTasksSection extends StatelessWidget {
       _homeScreenController.setListOfTasksIncomplete(
           _taskController.getTasksFilteredByTitle(
               _homeScreenController.searchTermForTitleFiltering));
+      if (_homeScreenController.getListOfTasksIncomplete().isEmpty) {
+        return const NoTasksFoundWidget(message: 'Couldn\'t find any task');
+      }
       return CustomListViewBuilderBasedOnOptions(
           listWithDesiredTasks:
               _homeScreenController.getListOfTasksIncomplete());
@@ -90,12 +94,20 @@ class IncompleteTasksSection extends StatelessWidget {
         _homeScreenController.newRangeToFilter!.start,
         _homeScreenController.newRangeToFilter!.end,
       ));
+      if (_homeScreenController.getListOfTasksIncomplete().isEmpty) {
+        return const NoTasksFoundWidget(
+            message: 'Couldn\'t find any task between those dates');
+      }
       return CustomListViewBuilderBasedOnOptions(
           listWithDesiredTasks:
               _homeScreenController.getListOfTasksIncomplete());
     }
     _homeScreenController
         .setListOfTasksIncomplete(_taskController.getIncompleteTasks());
+    if (_homeScreenController.getListOfTasksIncomplete().isEmpty) {
+      return const NoTasksFoundWidget(
+          message: 'There are no Incomplete tasks\n Try adding a new one');
+    }
     return CustomListViewBuilderBasedOnOptions(
         listWithDesiredTasks: _homeScreenController.getListOfTasksIncomplete());
   }
