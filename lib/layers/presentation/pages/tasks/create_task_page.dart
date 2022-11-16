@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:to_do_list_challenge/layers/presentation/components/content_divider_container.dart';
+import 'package:to_do_list_challenge/layers/presentation/components/custom_text_form_fields.dart';
+import 'package:to_do_list_challenge/layers/presentation/components/go_back_button.dart';
 import 'package:to_do_list_challenge/layers/presentation/controllers/task_controller.dart';
-import 'package:to_do_list_challenge/layers/presentation/pages/tasks/home_task_page.dart';
 import 'package:to_do_list_challenge/locator.dart';
+
+import '../../components/widgets/create_task_screen/custom_create_alert_dialog.dart';
+import '../../components/widgets/create_task_screen/custom_error_alert_dialog.dart';
 
 class CreateTaskPage extends StatelessWidget {
   CreateTaskPage({Key? key}) : super(key: key);
@@ -26,38 +31,18 @@ class CreateTaskPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            GestureDetector(
-              onTap: () => Navigator.of(context).pop(),
-              child: Row(
-                children: const [
-                  Padding(
-                    padding: EdgeInsets.only(right: 8),
-                    child: Icon(
-                      Icons.arrow_back_ios_new,
-                    ),
-                  ),
-                  Text('To go back'),
-                ],
-              ),
-            ),
+            const GoBackButton(),
             const SizedBox(
               height: 16,
             ),
             Text(
               'New Task',
-              style: Theme.of(context).textTheme.headlineMedium,
+              style: Theme.of(context).textTheme.headlineLarge,
             ),
             const SizedBox(
               height: 8,
             ),
-            Container(
-              height: 2,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: const Color.fromRGBO(255, 255, 255, 0.05),
-                ),
-              ),
-            ),
+            ContentDividerContainer(themeManagerController: locator()),
             const SizedBox(
               height: 16,
             ),
@@ -65,22 +50,16 @@ class CreateTaskPage extends StatelessWidget {
                 key: _formsKey,
                 child: Column(
                   children: [
-                    TextFormField(
-                      controller: _titleFormFieldController,
-                      decoration: const InputDecoration(
-                        labelText: 'Title',
-                        filled: true,
-                      ),
+                    CustomTextFormFields(
+                      _titleFormFieldController,
+                      labelText: 'Title',
                     ),
                     const SizedBox(
                       height: 24,
                     ),
-                    TextFormField(
-                      controller: _descriptionFormFieldController,
-                      decoration: const InputDecoration(
-                        labelText: 'Description',
-                        filled: true,
-                      ),
+                    CustomTextFormFields(
+                      _descriptionFormFieldController,
+                      labelText: 'Description',
                     ),
                     const SizedBox(
                       height: 24,
@@ -91,7 +70,6 @@ class CreateTaskPage extends StatelessWidget {
                       decoration: const InputDecoration(
                         labelText: 'Finish date',
                         suffixIcon: Icon(Icons.calendar_month),
-                        filled: true,
                       ),
                       onTap: () async {
                         pickedDate = await showDatePicker(
@@ -110,70 +88,59 @@ class CreateTaskPage extends StatelessWidget {
                     const SizedBox(
                       height: 24,
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        result = locator.get<TaskController>().createTask(
-                              _titleFormFieldController.text,
-                              _descriptionFormFieldController.text,
-                              pickedDate ?? DateTime.now(),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          if (_titleFormFieldController.text.isNotEmpty &&
+                              _descriptionFormFieldController.text.isNotEmpty) {
+                            result = locator.get<TaskController>().createTask(
+                                  _titleFormFieldController.text,
+                                  _descriptionFormFieldController.text,
+                                  pickedDate ?? DateTime.now(),
+                                );
+                          }
+                          if (result) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => CustomCreateAlertDialog(
+                                  descriptionFormFieldController:
+                                      _descriptionFormFieldController,
+                                  finishDateFormFieldController:
+                                      _finishDateFormFieldController,
+                                  titleFormFieldController:
+                                      _titleFormFieldController),
                             );
-                        if (result) {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: Text('Congrats!'),
-                              content: Text(
-                                  'Your task was succesfully created!\nWant to create another one ?'),
-                              actions: [
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        _descriptionFormFieldController.clear();
-                                        _finishDateFormFieldController.clear();
-                                        _titleFormFieldController.clear();
-                                        Navigator.pop(context);
-                                      },
-                                      child: Text('Yes!!'),
-                                    ),
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        Navigator.of(context)
-                                            .pushAndRemoveUntil(
-                                                MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        const HomeTaskPage(),
-                                                    fullscreenDialog: true),
-                                                (route) => false);
-                                      },
-                                      child: Text('No'),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          );
-                        } else {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: Text('Sorry for that'),
-                              content: Text(
-                                'A task with this title already exists, try with another one',
+                          }
+                          if (result == false &&
+                              (_titleFormFieldController.text.isEmpty ||
+                                  _descriptionFormFieldController
+                                      .text.isEmpty)) {
+                            showDialog(
+                              context: context,
+                              builder: (context) =>
+                                  const CustomErrorAlertDialog(
+                                mainMessage:
+                                    'The Title or Description fields are empty',
                               ),
-                              actions: [
-                                ElevatedButton(
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(),
-                                    child: Text('Close'))
-                              ],
-                            ),
-                          );
-                        }
-                      },
-                      child: const Text('Add Task'),
+                            );
+                          }
+                          if (result == false &&
+                              (_titleFormFieldController.text.isNotEmpty ||
+                                  _descriptionFormFieldController
+                                      .text.isNotEmpty)) {
+                            showDialog(
+                              context: context,
+                              builder: (context) =>
+                                  const CustomErrorAlertDialog(
+                                mainMessage:
+                                    'There\'s already a task with this Title, try with another one',
+                              ),
+                            );
+                          }
+                        },
+                        child: const Text('Add Task'),
+                      ),
                     )
                   ],
                 )),
