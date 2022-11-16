@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:to_do_list_challenge/layers/presentation/controllers/home_controller.dart';
 import 'package:to_do_list_challenge/layers/presentation/controllers/task_controller.dart';
 import 'package:to_do_list_challenge/layers/presentation/controllers/theme_manager_controller.dart';
-import 'package:to_do_list_challenge/layers/presentation/themes/theme_colors.dart';
+
 import 'package:to_do_list_challenge/locator.dart';
 
+import '../../content_divider_container.dart';
 import '../../widgets/home_task_screen/number_of_complete_and_incomplete_tasks_row.dart';
 
 class HomeTaskPageHeader extends StatelessWidget {
@@ -78,14 +79,8 @@ class HomeTaskPageHeader extends StatelessWidget {
               builder: (context, child) =>
                   NumberOfCompleteAndIncompleteTasksRow(_taskController),
             )),
-        Container(
-          height: 2,
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: const Color.fromRGBO(255, 255, 255, 0.05),
-            ),
-          ),
-        ),
+        ContentDividerContainer(
+            themeManagerController: _themeManagerController),
       ],
     );
   }
