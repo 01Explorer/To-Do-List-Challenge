@@ -45,6 +45,7 @@ ThemeData themeToDoLight = ThemeData(
   brightness: Brightness.light,
   fontFamily: GoogleFonts.inter().fontFamily,
   primarySwatch: ThemeColors.primaryAppColor,
+  scaffoldBackgroundColor: ThemeColors.backgorundColorLight,
   textTheme: const TextTheme(
     headlineLarge: TextStyle(
       fontWeight: FontWeight.w700,

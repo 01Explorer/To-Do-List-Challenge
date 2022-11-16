@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class ThemeColors {
   static const backgorundColorDark = Color.fromRGBO(20, 20, 25, 1);
+  static const backgorundColorLight = Color.fromARGB(255, 255, 255, 255);
   static const primaryAppColor = Colors.blue;
   static const headerFontColorDark = Color.fromRGBO(218, 218, 218, 1);
   static const headerFontColorLight = Color.fromRGBO(41, 43, 53, 1);
