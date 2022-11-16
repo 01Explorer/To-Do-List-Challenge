@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:to_do_list_challenge/layers/presentation/components/no_task_found_handling_widget.dart';
 import 'package:to_do_list_challenge/layers/presentation/controllers/home_controller.dart';
 import 'package:to_do_list_challenge/layers/presentation/controllers/task_controller.dart';
@@ -51,12 +52,21 @@ class IncompleteTasksSection extends StatelessWidget {
               animation: _homeScreenController,
               builder: (context, child) {
                 return Visibility(
-                  visible: _homeScreenController.newRangeToFilter != null,
-                  child: IconButton(
-                      onPressed: () =>
-                          _homeScreenController.resetDateBetweenFiltering(),
-                      icon: const Icon(Icons.refresh)),
-                );
+                    visible: _homeScreenController.newRangeToFilter != null,
+                    child: Row(
+                      children: [
+                        IconButton(
+                            onPressed: () => _homeScreenController
+                                .resetDateBetweenFiltering(),
+                            icon: const Icon(Icons.refresh)),
+                        Text(
+                          _homeScreenController.newRangeToFilter != null
+                              ? 'Filtered from\n ${DateFormat('dd/MM/yy').format(_homeScreenController.newRangeToFilter!.start)} to ${DateFormat('dd/MM/yy').format(_homeScreenController.newRangeToFilter!.end)}'
+                              : '',
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ));
               },
             )
           ],
