@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:to_do_list_challenge/layers/domain/entities/task_entity.dart';
+import 'package:to_do_list_challenge/layers/presentation/components/content_divider_container.dart';
 import 'package:to_do_list_challenge/layers/presentation/controllers/task_controller.dart';
 import 'package:to_do_list_challenge/layers/presentation/pages/tasks/home_task_page.dart';
 import 'package:to_do_list_challenge/locator.dart';
+
+import '../../components/custom_text_form_fields.dart';
+import '../../components/go_back_button.dart';
 
 class EditTaskPage extends StatelessWidget {
   final TaskEntity task;
@@ -33,38 +37,18 @@ class EditTaskPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            GestureDetector(
-              onTap: () => Navigator.of(context).pop(),
-              child: Row(
-                children: const [
-                  Padding(
-                    padding: EdgeInsets.only(right: 8),
-                    child: Icon(
-                      Icons.arrow_back_ios_new,
-                    ),
-                  ),
-                  Text('To go back'),
-                ],
-              ),
-            ),
+            const GoBackButton(),
             const SizedBox(
               height: 16,
             ),
             Text(
               'Edit Task',
-              style: Theme.of(context).textTheme.headlineMedium,
+              style: Theme.of(context).textTheme.headlineLarge,
             ),
             const SizedBox(
               height: 8,
             ),
-            Container(
-              height: 2,
-              decoration: BoxDecoration(
-                border: Border.all(
-                  color: const Color.fromRGBO(255, 255, 255, 0.05),
-                ),
-              ),
-            ),
+            ContentDividerContainer(themeManagerController: locator()),
             const SizedBox(
               height: 16,
             ),
@@ -72,22 +56,16 @@ class EditTaskPage extends StatelessWidget {
                 key: _formsKey,
                 child: Column(
                   children: [
-                    TextFormField(
-                      controller: _titleFormFieldController,
-                      decoration: const InputDecoration(
-                        labelText: 'Title',
-                        filled: true,
-                      ),
+                    CustomTextFormFields(
+                      _titleFormFieldController,
+                      labelText: 'Title',
                     ),
                     const SizedBox(
                       height: 24,
                     ),
-                    TextFormField(
-                      controller: _descriptionFormFieldController,
-                      decoration: const InputDecoration(
-                        labelText: 'Description',
-                        filled: true,
-                      ),
+                    CustomTextFormFields(
+                      _descriptionFormFieldController,
+                      labelText: 'Description',
                     ),
                     const SizedBox(
                       height: 24,
@@ -98,7 +76,6 @@ class EditTaskPage extends StatelessWidget {
                       decoration: const InputDecoration(
                         labelText: 'Finish date',
                         suffixIcon: Icon(Icons.calendar_month),
-                        filled: true,
                       ),
                       onTap: () async {
                         pickedDate = await showDatePicker(
@@ -117,57 +94,72 @@ class EditTaskPage extends StatelessWidget {
                     const SizedBox(
                       height: 24,
                     ),
-                    ElevatedButton(
-                      onPressed: () {
-                        task.title = _titleFormFieldController.text;
-                        task.description = _descriptionFormFieldController.text;
-                        task.expiryDate = pickedDate ?? task.expiryDate;
-                        result = locator
-                            .get<TaskController>()
-                            .editTask(task, initialTitle);
-                        if (result) {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: Text('Congrats!'),
-                              content:
-                                  Text('Your task was succesfully edited!'),
-                              actions: [
-                                Row(
-                                  children: [
-                                    ElevatedButton(
-                                      onPressed: () {
-                                        _descriptionFormFieldController.clear();
-                                        _finishDateFormFieldController.clear();
-                                        _titleFormFieldController.clear();
-                                        Navigator.pop(context);
-                                      },
-                                      child: Text('Close'),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          );
-                        } else {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: Text('Sorry for that'),
-                              content: Text(
-                                'Your task couldn\'t be edited',
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          task.title = _titleFormFieldController.text;
+                          task.description =
+                              _descriptionFormFieldController.text;
+                          task.expiryDate = pickedDate ?? task.expiryDate;
+                          result = locator
+                              .get<TaskController>()
+                              .editTask(task, initialTitle);
+                          if (result) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: const Text('Congrats!'),
+                                content: const Text(
+                                    'Your task was succesfully edited!'),
+                                actions: [
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 300,
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            _descriptionFormFieldController
+                                                .clear();
+                                            _finishDateFormFieldController
+                                                .clear();
+                                            _titleFormFieldController.clear();
+                                            Navigator.of(context)
+                                                .pushAndRemoveUntil(
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          const HomeTaskPage(),
+                                                    ),
+                                                    (route) => false);
+                                          },
+                                          child: const Text('Close'),
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                ],
                               ),
-                              actions: [
-                                ElevatedButton(
-                                    onPressed: () =>
-                                        Navigator.of(context).pop(),
-                                    child: Text('Close'))
-                              ],
-                            ),
-                          );
-                        }
-                      },
-                      child: const Text('Edit Task'),
+                            );
+                          } else {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                title: const Text('Sorry for that'),
+                                content: const Text(
+                                  'Your task couldn\'t be edited',
+                                ),
+                                actions: [
+                                  ElevatedButton(
+                                      onPressed: () =>
+                                          Navigator.of(context).pop(),
+                                      child: const Text('Close'))
+                                ],
+                              ),
+                            );
+                          }
+                        },
+                        child: const Text('Edit Task'),
+                      ),
                     )
                   ],
                 )),
