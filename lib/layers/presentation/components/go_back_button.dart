@@ -18,7 +18,7 @@ class GoBackButton extends StatelessWidget {
             ),
           ),
           Text(
-            'To go back',
+            'Go back',
             style: Theme.of(context).textTheme.bodySmall,
           ),
         ],
