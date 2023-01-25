@@ -9,29 +9,42 @@ import 'package:to_do_list_challenge/locator.dart';
 import '../../components/custom_text_form_fields.dart';
 import '../../components/go_back_button.dart';
 
-class EditTaskPage extends StatelessWidget {
+class EditTaskPage extends StatefulWidget {
   final TaskEntity task;
-  EditTaskPage({Key? key, required this.task}) : super(key: key);
+  const EditTaskPage({Key? key, required this.task}) : super(key: key);
 
+  @override
+  State<EditTaskPage> createState() => _EditTaskPageState();
+}
+
+class _EditTaskPageState extends State<EditTaskPage> {
   final GlobalKey _formsKey = GlobalKey<FormState>();
-  final TextEditingController _titleFormFieldController =
-      TextEditingController();
-  final TextEditingController _descriptionFormFieldController =
-      TextEditingController();
-  final TextEditingController _finishDateFormFieldController =
-      TextEditingController();
+  late final String initialTitle;
+  late final TextEditingController _titleController;
+  late final TextEditingController _descriptionController;
+  late final TextEditingController _expiryDateController;
+
+  @override
+  void initState() {
+    super.initState();
+    initialTitle = widget.task.title.toLowerCase();
+    _titleController = TextEditingController();
+    _descriptionController = TextEditingController();
+    _expiryDateController = TextEditingController();
+    _titleController.text = widget.task.title;
+    _descriptionController.text = widget.task.description;
+    _expiryDateController.text =
+        DateFormat('dd/MM/yyyy').format(widget.task.expiryDate);
+  }
 
   DateTime? pickedDate;
+
   bool result = false;
 
   @override
   Widget build(BuildContext context) {
-    String initialTitle = task.title;
-    _titleFormFieldController.text = task.title;
-    _descriptionFormFieldController.text = task.description;
-    _finishDateFormFieldController.text =
-        DateFormat('dd/MM/yyyy').format(task.expiryDate);
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Padding(
         padding: const EdgeInsets.fromLTRB(16, 55, 16, 0),
         child: Column(
@@ -57,22 +70,22 @@ class EditTaskPage extends StatelessWidget {
                 child: Column(
                   children: [
                     CustomTextFormFields(
-                      _titleFormFieldController,
                       labelText: 'Title',
+                      textEditingController: _titleController,
                     ),
                     const SizedBox(
                       height: 24,
                     ),
                     CustomTextFormFields(
-                      _descriptionFormFieldController,
                       labelText: 'Description',
+                      textEditingController: _descriptionController,
                     ),
                     const SizedBox(
                       height: 24,
                     ),
                     TextFormField(
+                      controller: _expiryDateController,
                       keyboardType: TextInputType.none,
-                      controller: _finishDateFormFieldController,
                       decoration: const InputDecoration(
                         labelText: 'Finish date',
                         suffixIcon: Icon(Icons.calendar_month),
@@ -81,13 +94,12 @@ class EditTaskPage extends StatelessWidget {
                         pickedDate = await showDatePicker(
                           context: context,
                           initialDate: DateTime.now(),
-                          firstDate: DateTime(2021),
+                          firstDate: DateTime(2023),
                           lastDate: DateTime(2025),
                         );
                         if (pickedDate != null) {
-                          String formattedDate =
+                          _expiryDateController.text =
                               DateFormat('dd/MM/yyyy').format(pickedDate!);
-                          _finishDateFormFieldController.text = formattedDate;
                         }
                       },
                     ),
@@ -98,13 +110,13 @@ class EditTaskPage extends StatelessWidget {
                       width: MediaQuery.of(context).size.width * 0.8,
                       child: ElevatedButton(
                         onPressed: () {
-                          task.title = _titleFormFieldController.text;
-                          task.description =
-                              _descriptionFormFieldController.text;
-                          task.expiryDate = pickedDate ?? task.expiryDate;
+                          widget.task.title = _titleController.text;
+                          widget.task.description = _descriptionController.text;
+                          widget.task.expiryDate =
+                              pickedDate ?? widget.task.expiryDate;
                           result = locator
                               .get<TaskController>()
-                              .editTask(task, initialTitle);
+                              .editTask(widget.task, initialTitle);
                           if (result) {
                             showDialog(
                               context: context,
@@ -119,11 +131,6 @@ class EditTaskPage extends StatelessWidget {
                                         width: 300,
                                         child: ElevatedButton(
                                           onPressed: () {
-                                            _descriptionFormFieldController
-                                                .clear();
-                                            _finishDateFormFieldController
-                                                .clear();
-                                            _titleFormFieldController.clear();
                                             Navigator.of(context)
                                                 .pushAndRemoveUntil(
                                                     MaterialPageRoute(
