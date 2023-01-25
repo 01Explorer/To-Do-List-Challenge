@@ -51,14 +51,14 @@ class CreateTaskPage extends StatelessWidget {
                 child: Column(
                   children: [
                     CustomTextFormFields(
-                      _titleFormFieldController,
+                      textEditingController: _titleFormFieldController,
                       labelText: 'Title',
                     ),
                     const SizedBox(
                       height: 24,
                     ),
                     CustomTextFormFields(
-                      _descriptionFormFieldController,
+                      textEditingController: _descriptionFormFieldController,
                       labelText: 'Description',
                     ),
                     const SizedBox(
