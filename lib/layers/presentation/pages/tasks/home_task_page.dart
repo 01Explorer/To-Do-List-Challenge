@@ -22,6 +22,7 @@ class _HomeTaskPageState extends State<HomeTaskPage> {
   @override
   void initState() {
     super.initState();
+
     _homeScreenController
         .setListOfTasksIncomplete(_taskController.getIncompleteTasks());
     _homeScreenController
@@ -33,17 +34,17 @@ class _HomeTaskPageState extends State<HomeTaskPage> {
     return Scaffold(
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.fromLTRB(16, 71, 16, 56),
+          padding: const EdgeInsets.fromLTRB(16, 24, 16, 56),
           child: SizedBox(
             child: Column(
               children: [
                 HomeTaskPageHeader(_homeScreenController, _taskController),
                 const SizedBox(
-                  height: 16,
+                  height: 8,
                 ),
                 VisibilitySearchTextField(_homeScreenController),
                 const SizedBox(
-                  height: 16,
+                  height: 8,
                 ),
                 IncompleteTasksSection(_homeScreenController, _taskController),
                 const SizedBox(
@@ -51,7 +52,7 @@ class _HomeTaskPageState extends State<HomeTaskPage> {
                 ),
                 CompletedTasksSection(_taskController, _homeScreenController),
                 const Padding(
-                  padding: EdgeInsets.only(top: 20),
+                  padding: EdgeInsets.only(top: 15),
                   child: Align(
                     alignment: Alignment.bottomRight,
                     child: CustomFloatingActionButton(),

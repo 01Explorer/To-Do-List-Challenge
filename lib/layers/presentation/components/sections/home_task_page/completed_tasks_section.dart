@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:to_do_list_challenge/layers/presentation/components/custom_list_view_builder_based_on_options.dart';
 import 'package:to_do_list_challenge/layers/presentation/controllers/home_controller.dart';
 import 'package:to_do_list_challenge/layers/presentation/controllers/task_controller.dart';
@@ -27,8 +28,8 @@ class CompletedTasksSection extends StatelessWidget {
           ],
         ),
         SizedBox(
-          height: 230,
-          width: double.infinity,
+          height: 180.h,
+          width: double.infinity.w,
           child: AnimatedBuilder(
             animation: _taskController,
             builder: (BuildContext context, Widget? child) {

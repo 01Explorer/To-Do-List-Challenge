@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:to_do_list_challenge/layers/data/datasources/local/dao/task_entity_dao.dart';
 import 'package:to_do_list_challenge/layers/domain/entities/task_entity.dart';
@@ -10,6 +11,7 @@ import 'package:to_do_list_challenge/locator.dart';
 late Box<TaskEntity> localTasksStorage;
 void main() async {
   setup();
+
   await Hive.initFlutter();
   Hive.registerAdapter(TaskEntityDaoAdapter());
   localTasksStorage = await Hive.openBox<TaskEntity>('localTasksStorage');
@@ -27,13 +29,18 @@ class MyApp extends StatelessWidget {
     return AnimatedBuilder(
       animation: _themeManagerController,
       builder: (BuildContext context, Widget? child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
-          theme: themeToDoLight,
-          darkTheme: themeToDoDark,
-          themeMode: _themeManagerController.themeMode,
-          home: const HomeTaskPage(),
+        return ScreenUtilInit(
+          designSize: const Size(360, 640),
+          builder: (context, child) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'Flutter Demo',
+              theme: themeToDoLight,
+              darkTheme: themeToDoDark,
+              themeMode: _themeManagerController.themeMode,
+              home: const HomeTaskPage(),
+            );
+          },
         );
       },
     );

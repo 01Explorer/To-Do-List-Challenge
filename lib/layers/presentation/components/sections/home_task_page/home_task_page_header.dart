@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:to_do_list_challenge/layers/presentation/controllers/home_controller.dart';
 import 'package:to_do_list_challenge/layers/presentation/controllers/task_controller.dart';
 import 'package:to_do_list_challenge/layers/presentation/controllers/theme_manager_controller.dart';
@@ -30,19 +31,19 @@ class HomeTaskPageHeader extends StatelessWidget {
               style: Theme.of(context).textTheme.headlineLarge,
             ),
             SizedBox(
-                width: 48,
-                height: 48,
+                width: 48.w,
+                height: 48.h,
                 child: GestureDetector(
                   onTap: () {
                     showModalBottomSheet(
                         context: context,
                         builder: (context) {
                           return Container(
-                            height: 120,
+                            height: 120.h,
                             decoration: BoxDecoration(
                               border: Border.all(color: Colors.white),
-                              borderRadius: const BorderRadius.vertical(
-                                  top: Radius.circular(20)),
+                              borderRadius: BorderRadius.vertical(
+                                  top: Radius.circular(20.r)),
                             ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,

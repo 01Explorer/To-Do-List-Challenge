@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:to_do_list_challenge/layers/presentation/components/no_task_found_handling_widget.dart';
 import 'package:to_do_list_challenge/layers/presentation/controllers/home_controller.dart';
@@ -64,6 +65,7 @@ class IncompleteTasksSection extends StatelessWidget {
                               ? 'Filtered from\n ${DateFormat('dd/MM/yy').format(_homeScreenController.newRangeToFilter!.start)} to ${DateFormat('dd/MM/yy').format(_homeScreenController.newRangeToFilter!.end)}'
                               : '',
                           textAlign: TextAlign.center,
+                          style: const TextStyle(fontSize: 10),
                         ),
                       ],
                     ));
@@ -72,8 +74,8 @@ class IncompleteTasksSection extends StatelessWidget {
           ],
         ),
         SizedBox(
-          height: 230,
-          width: double.infinity,
+          height: 180.h,
+          width: double.infinity.w,
           child: AnimatedBuilder(
             animation:
                 Listenable.merge([_taskController, _homeScreenController]),
