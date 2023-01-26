@@ -9,7 +9,9 @@ class FilterTasksByTitleRepositoryImp implements FilterTasksByTitleRepository {
   @override
   List<TaskEntity> call(String searchTerm) {
     return hiveBox.values
-        .where((e) => e.title.toLowerCase().contains(searchTerm.toLowerCase()))
+        .where((e) =>
+            e.title.toLowerCase().contains(searchTerm.toLowerCase()) &&
+            e.isCompleted == false)
         .toList();
   }
 }
