@@ -11,7 +11,8 @@ class FilterTasksByDateBetweenRepositoryImp
   List<TaskEntity> call(DateTime startDate, DateTime endDate) {
     return hiveBox.values
         .where((e) =>
-            e.expiryDate.isAfter(startDate) && e.expiryDate.isBefore(endDate))
+            e.expiryDate.isAfter(startDate.subtract(const Duration(days: 1))) &&
+            e.expiryDate.isBefore(endDate))
         .toList();
   }
 }
