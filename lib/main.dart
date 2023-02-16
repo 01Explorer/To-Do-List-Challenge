@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:to_do_list_challenge/layers/data/datasources/local/dao/task_entity_dao.dart';
 import 'package:to_do_list_challenge/layers/domain/entities/task_entity.dart';
 import 'package:to_do_list_challenge/layers/presentation/controllers/theme_manager_controller.dart';
@@ -10,12 +11,14 @@ import 'package:to_do_list_challenge/locator.dart';
 
 late Box<TaskEntity> localTasksStorage;
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   setup();
-
   await Hive.initFlutter();
   Hive.registerAdapter(TaskEntityDaoAdapter());
   localTasksStorage = await Hive.openBox<TaskEntity>('localTasksStorage');
-  runApp(const MyApp());
+  locator.isReady<SharedPreferences>().then((_) async {
+    runApp(const MyApp());
+  });
 }
 
 ThemeManagerController _themeManagerController =
