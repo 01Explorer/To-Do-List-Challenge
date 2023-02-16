@@ -5,7 +5,9 @@ class ThemeManagerController extends ChangeNotifier {
   final ChangeAppThemeUsecase _appThemeUsecase;
   ThemeMode _themeMode = ThemeMode.light;
 
-  ThemeManagerController(this._appThemeUsecase);
+  ThemeManagerController(this._appThemeUsecase) {
+    _themeMode = _appThemeUsecase.getTheme();
+  }
 
   get themeMode => _themeMode;
 

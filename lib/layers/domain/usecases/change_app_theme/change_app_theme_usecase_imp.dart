@@ -10,4 +10,9 @@ class ChangeAppThemeUsecaseImp implements ChangeAppThemeUsecase {
   ThemeMode call(bool isDark) {
     return _changeAppThemeRepository(isDark);
   }
+
+  @override
+  ThemeMode getTheme() {
+    return _changeAppThemeRepository.getTheme();
+  }
 }
