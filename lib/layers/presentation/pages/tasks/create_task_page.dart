@@ -26,6 +26,7 @@ class CreateTaskPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: Padding(
         padding: const EdgeInsets.fromLTRB(16, 55, 16, 0),
         child: Column(
