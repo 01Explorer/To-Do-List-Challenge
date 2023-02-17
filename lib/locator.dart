@@ -10,6 +10,7 @@ import 'package:to_do_list_challenge/layers/data/datasources/local/repositories/
 import 'package:to_do_list_challenge/layers/data/datasources/local/repositories/get_completed_tasks/get_completed_tasks_repository_imp.dart';
 import 'package:to_do_list_challenge/layers/data/datasources/local/repositories/get_incomplete_tasks/get_incomplete_tasks_repository_imp.dart';
 import 'package:to_do_list_challenge/layers/data/datasources/local/repositories/mark_a_task_as_done/mark_a_task_as_done_repository_imp.dart';
+import 'package:to_do_list_challenge/layers/data/datasources/local/repositories/sign_user/sign_user_repository_implementation.dart';
 import 'package:to_do_list_challenge/layers/data/services/save_local_implementation.dart';
 import 'package:to_do_list_challenge/layers/domain/entities/task_entity.dart';
 import 'package:to_do_list_challenge/layers/domain/repositories/change_app_theme/change_app_theme_repository.dart';
@@ -21,6 +22,7 @@ import 'package:to_do_list_challenge/layers/domain/repositories/filter_tasks_by_
 import 'package:to_do_list_challenge/layers/domain/repositories/get_completed_tasks/get_completed_tasks_repository.dart';
 import 'package:to_do_list_challenge/layers/domain/repositories/get_incomplete_tasks/get_incomplete_tasks_repository.dart';
 import 'package:to_do_list_challenge/layers/domain/repositories/mark_a_task_as_done/mark_a_task_as_done_repository.dart';
+import 'package:to_do_list_challenge/layers/domain/repositories/sign_user/sign_user_repository.dart';
 import 'package:to_do_list_challenge/layers/domain/services/save_local.dart';
 import 'package:to_do_list_challenge/layers/domain/usecases/change_app_theme/change_app_theme_usecase.dart';
 import 'package:to_do_list_challenge/layers/domain/usecases/change_app_theme/change_app_theme_usecase_imp.dart';
@@ -40,7 +42,10 @@ import 'package:to_do_list_challenge/layers/domain/usecases/get_incomplete_tasks
 import 'package:to_do_list_challenge/layers/domain/usecases/get_incomplete_tasks/get_incomplete_tasks_usecase_imp.dart';
 import 'package:to_do_list_challenge/layers/domain/usecases/mark_a_task_as_done/mark_a_task_as_done_usecase.dart';
 import 'package:to_do_list_challenge/layers/domain/usecases/mark_a_task_as_done/mark_a_task_as_done_usecase_imp.dart';
+import 'package:to_do_list_challenge/layers/domain/usecases/sign_user/sign_user_usecase.dart';
+import 'package:to_do_list_challenge/layers/domain/usecases/sign_user/sign_user_usecase_implementation.dart';
 import 'package:to_do_list_challenge/layers/presentation/controllers/home_controller.dart';
+import 'package:to_do_list_challenge/layers/presentation/controllers/land_page_controller.dart';
 import 'package:to_do_list_challenge/layers/presentation/controllers/task_controller.dart';
 import 'package:to_do_list_challenge/layers/presentation/controllers/theme_manager_controller.dart';
 
@@ -75,6 +80,8 @@ void setup() {
       () => GetCompletedTasksRepositoryImp(locator()));
   locator.registerLazySingleton<ChangeAppThemeRepository>(
       () => ChangeAppThemeRepositoryImp(locator()));
+  locator.registerLazySingleton<SignUserRepository>(
+      () => SignUserRepositoryImplementationo(locator()));
   // Usecases
   locator.registerLazySingleton<CreateTasksUsecase>(
       () => CreateTasksUsecaseImp(locator()));
@@ -94,6 +101,8 @@ void setup() {
       () => GetCompletedTasksUsecaseImp(locator()));
   locator.registerLazySingleton<ChangeAppThemeUsecase>(
       () => ChangeAppThemeUsecaseImp(locator()));
+  locator.registerLazySingleton<SignUserUsecase>(
+      () => SignUserUsecaseImplementation(locator()));
 
   // Controllers
   locator.registerLazySingleton<TaskController>(() => TaskController(
@@ -108,6 +117,8 @@ void setup() {
   locator.registerLazySingleton<HomeController>(() => HomeController());
   locator.registerLazySingleton<ThemeManagerController>(
       () => ThemeManagerController(locator()));
+  locator.registerLazySingleton<LandPageController>(
+      () => LandPageController(locator()));
   // Hive Box
   locator.registerLazySingleton<Box<TaskEntity>>(() => localTasksStorage);
 }
