@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:to_do_list_challenge/layers/presentation/controllers/home_controller.dart';
+import 'package:to_do_list_challenge/layers/presentation/controllers/land_page_controller.dart';
 import 'package:to_do_list_challenge/layers/presentation/controllers/task_controller.dart';
 import 'package:to_do_list_challenge/layers/presentation/controllers/theme_manager_controller.dart';
 
@@ -65,10 +66,15 @@ class HomeTaskPageHeader extends StatelessWidget {
                           );
                         });
                   },
-                  child: const CircleAvatar(
+                  child: CircleAvatar(
                     backgroundColor: Colors.white54,
-                    backgroundImage:
-                        AssetImage('assets/images/example_image.png'),
+                    child: Text(
+                      locator.get<LandPageController>().getUser()![0],
+                      style: Theme.of(context)
+                          .textTheme
+                          .headlineLarge!
+                          .copyWith(fontSize: 24),
+                    ),
                   ),
                 ))
           ],
