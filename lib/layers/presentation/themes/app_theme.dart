@@ -39,6 +39,16 @@ ThemeData themeToDoDark = ThemeData(
     backgroundColor: ThemeColors.primaryAppColor,
     iconSize: 32,
   ),
+  elevatedButtonTheme: const ElevatedButtonThemeData(
+      style: ButtonStyle(
+          backgroundColor:
+              MaterialStatePropertyAll<Color>(ThemeColors.primaryAppColor),
+          textStyle: MaterialStatePropertyAll<TextStyle>(
+            TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+                color: ThemeColors.headerFontColorDark),
+          ))),
 );
 
 ThemeData themeToDoLight = ThemeData(
@@ -78,4 +88,14 @@ ThemeData themeToDoLight = ThemeData(
     backgroundColor: ThemeColors.primaryAppColor,
     iconSize: 32,
   ),
+  elevatedButtonTheme: const ElevatedButtonThemeData(
+      style: ButtonStyle(
+          backgroundColor:
+              MaterialStatePropertyAll<Color>(ThemeColors.primaryAppColor),
+          textStyle: MaterialStatePropertyAll<TextStyle>(
+            TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 16,
+                color: ThemeColors.headerFontColorDark),
+          ))),
 );
