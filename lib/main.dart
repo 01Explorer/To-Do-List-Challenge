@@ -8,7 +8,6 @@ import 'package:to_do_list_challenge/layers/presentation/controllers/land_page_c
 import 'package:to_do_list_challenge/layers/presentation/controllers/theme_manager_controller.dart';
 import 'package:to_do_list_challenge/layers/presentation/pages/land/land_page_first.dart';
 import 'package:to_do_list_challenge/layers/presentation/pages/land/land_page_logged.dart';
-import 'package:to_do_list_challenge/layers/presentation/pages/tasks/home_task_page.dart';
 import 'package:to_do_list_challenge/layers/presentation/themes/app_theme.dart';
 import 'package:to_do_list_challenge/locator.dart';
 
