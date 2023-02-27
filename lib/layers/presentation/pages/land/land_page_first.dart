@@ -42,7 +42,7 @@ class _LandPageState extends State<LandPage> {
                   speed: const Duration(milliseconds: 50),
                 ),
                 TyperAnimatedText(
-                  'Welcome to Tasky!',
+                  'Welcome to ToDoIt!',
                   textStyle: Theme.of(context).textTheme.headlineLarge,
                   speed: const Duration(milliseconds: 50),
                 ),
